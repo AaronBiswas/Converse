@@ -29,9 +29,29 @@ export const sendMessage = async (req, res) => {
       conversation.messages.push(newMessage._id);
     }
 
-    await Promise.all([conversation.save(),newMessage.save()]);
+    await Promise.all([conversation.save(), newMessage.save()]);
 
     return res.status(201).json(newMessage);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const getMessage = async (req, res) => {
+  try {
+    const { id: usertoChatId } = req.params;
+    const senderId = req.user._id;
+
+    const conversation = await Conversation.findOne({
+      participants: {
+        $all: [senderId, usertoChatId],
+      },
+    }).populate("messages");
+
+    if (!conversation) return res.status(200).json([]);
+    const messages = conversation.messages;
+    return res.status(200).json(messages);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
