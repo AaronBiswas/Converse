@@ -1,6 +1,8 @@
 import express from "express";
 import { config } from "dotenv";
+import cookieParser from "cookie-parser";
 import authRoutes from "../backend/Routes/Auth.routes.js";
+import messageRoutes from "../backend/Routes/Message.routes.js";
 import connected from "./db/connectdb.js";
 
 const app = express();
@@ -14,7 +16,11 @@ app.get("/", (req, res) => {
 
 
 app.use(express.json());
-app.use("/api/auth/", authRoutes);
+app.use(cookieParser());
+
+
+app.use("/api/auth", authRoutes);
+app.use("/api/message",messageRoutes);
 
 app.listen(PORT, () => {
   connected();
