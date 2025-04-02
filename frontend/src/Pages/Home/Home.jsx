@@ -10,7 +10,6 @@ const Home = () => {
         bg-gradient-to-br from-black to-gray-900 border border-blue-500 
         backdrop-filter backdrop-blur-lg bg-opacity-30 shadow-blue-400/60 flex"
       >
-        {/* Sidebar and MessageContainer are now inside a flex container */}
         <Sidebar />
         <MessageContainer />
       </div>

@@ -1,7 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useLogin from "../../Hooks/useLogin.js";
 
 const Login = () => {
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  const{loading,login}=useLogin();
+
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    await login(username,password);
+  }
+
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black p-4">
       <div
@@ -13,7 +25,7 @@ const Login = () => {
           <span className="text-blue-400">Login</span>{" "}
           <span className="text-white/90">Converse</span>
         </h1>
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="label p-2">
               <span className="text-base label-text text-white/80">
@@ -24,6 +36,10 @@ const Login = () => {
               type="text"
               placeholder="Enter Username"
               className="w-full input input-bordered h-10 bg-gray-800/50 text-white border-blue-500/50 focus:border-blue-500 focus:ring-blue-500"
+              value={username}
+              onChange={(e) => {
+                setusername(e.target.value);
+              }}
             />
           </div>
           <div>
@@ -36,6 +52,10 @@ const Login = () => {
               type="password"
               placeholder="Enter Password"
               className="w-full input input-bordered h-10 bg-gray-800/50 text-white border-blue-500/50 focus:border-blue-500 focus:ring-blue-500"
+              value={password}
+              onChange={(e) => {
+                setpassword(e.target.value);
+              }}
             />
           </div>
           <div className="mt-2 mb-4">
@@ -47,8 +67,8 @@ const Login = () => {
             </Link>
           </div>
           <div>
-            <button className="btn btn-block btn-md bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-400/20">
-              Login
+            <button disabled={loading} className="btn btn-block btn-md bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-400/20">
+            {loading? <span className="loading loading-spinner"></span>:"Login"}
             </button>
           </div>
         </form>

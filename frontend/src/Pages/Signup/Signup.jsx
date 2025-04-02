@@ -102,8 +102,8 @@ const {loading,signup}=useSignup();
             </Link>
           </div>
           <div>
-            <button className="btn btn-block btn-md bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-400/20">
-              Sign Up
+            <button disabled={loading} className="btn btn-block btn-md bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-600 text-white border-blue-500 shadow-lg shadow-blue-400/20">
+              {loading? <span className="loading loading-spinner"></span>:"Sign up"}
             </button>
           </div>
         </form>
