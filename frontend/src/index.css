@@ -1,12 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
 
-
-body{
+/* Apply Exo 2 font to the entire application */
+body {
+    font-family: 'Exo 2', sans-serif;
     background:linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url("/bg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position:center;
+}
+
+/* Input field lighting effects */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="search"],
+input[type="number"],
+textarea,
+select,
+.input {
+    border: 1px solid rgba(59, 130, 246, 0.5); /* blue-500/50 */
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 rgba(59, 130, 246, 0);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus,
+.input:focus {
+    border-color: rgb(59, 130, 246); /* blue-500 */
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.6); /* blue glow effect */
+    outline: none;
+}
+
+/* Hover effect for inputs */
+input[type="text"]:hover,
+input[type="password"]:hover,
+input[type="email"]:hover,
+input[type="search"]:hover,
+input[type="number"]:hover,
+textarea:hover,
+select:hover,
+.input:hover {
+    border-color: rgba(59, 130, 246, 0.8);
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+}
+
+/* Button glow effect */
+button.btn,
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+button.btn:after,
+.btn:after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0) 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+button.btn:hover:after,
+.btn:hover:after {
+    opacity: 1;
 }
 
 ::-webkit-scrollbar{
