@@ -23,6 +23,7 @@ const Login = () => {
       >
         <h1 className="text-3xl font-semibold text-center mb-6">
           <span className="text-blue-400">Login</span>{" "}
+          <span className="text-blue-400">to</span>{" "}
           <span className="text-white/90">Converse</span>
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
