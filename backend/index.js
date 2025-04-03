@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 
 // CORS configuration
 app.use(cors({
-  origin: ["http://localhost:5173", "https://converse-7i2n.onrender.com"],
+  origin: ["http://localhost:5173"],
   credentials: true, // Allow cookies to be sent
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
