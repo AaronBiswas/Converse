@@ -9,7 +9,7 @@ const useLogout = () => {
   const Logout=async () => {
     setloading(true);
     try {
-        const res= await fetch("http://localhost:8000/api/auth/logout", {
+        const res= await fetch("https://converse-7i2n.onrender.com/api/auth/logout", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         credentials: "include"});

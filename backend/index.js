@@ -7,9 +7,12 @@ import messageRoutes from "../backend/Routes/Message.routes.js";
 import userRoutes from "../backend/Routes/User.routes.js";
 import connected from "./db/connectdb.js";
 import { app, server } from "./Socket/Socket.js";
+import job from "./utils/cronjob.js";
 
 config();
 const PORT = process.env.PORT || 8000;
+
+job.start();
 
 app.get("/", (req, res) => {
   return res.send("Hello");

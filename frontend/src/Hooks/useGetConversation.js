@@ -13,7 +13,7 @@ const useGetConversation = () => {
     const getConversation = async () => {
       setloading(true);
       try {
-        const res = await fetch("http://localhost:8000/api/users", {
+        const res = await fetch("https://converse-7i2n.onrender.com/api/users", {
           method: "GET",
           headers: {
             "Content-Type": "application/json"
