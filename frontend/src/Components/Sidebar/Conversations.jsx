@@ -11,7 +11,7 @@ const Conversations = ({ conversation, lastIdx, isSelected, setSelectedConversat
   
   return (
     <>
-      <div className={`flex gap-2 items-center hover:bg-blue-500/20 rounded p-2 py-1 cursor-pointer transition-all duration-300 backdrop-blur-sm
+      <div className={`flex gap-2 items-center hover:bg-blue-500/20 rounded p-2 py-1 cursor-pointer transition-all duration-500 backdrop-blur-sm
         ${isSelected ? "bg-blue-500/20" : ""}
         `} onClick={() => setSelectedConversation(conversation)}>
         <div className="avatar online">

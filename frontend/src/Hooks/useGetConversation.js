@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useAuthContext } from "../Context/AuthContext";
+import useConversation from "../Zustand/useConversation";
 
 const useGetConversation = () => {
   const [loading, setloading] = useState(false);
   const [conversation, setconversation] = useState([]);
-  const [selectedConversation, setSelectedConversation] = useState(null);
+  const { selectedConversation, setselectedConversation } = useConversation();
   const { AuthUser } = useAuthContext();
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const useGetConversation = () => {
     getConversation();
   }, []);
   
-  return { loading, conversation, selectedConversation, setSelectedConversation };
+  return { loading, conversation, selectedConversation, setSelectedConversation: setselectedConversation };
 };
 
 export default useGetConversation;

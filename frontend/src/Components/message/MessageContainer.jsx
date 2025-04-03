@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Messages from './Messages.jsx'
 import MessageInput from './MessageInput.jsx'
 import {TiMessages} from "react-icons/ti"
+import useConversation from '../../Zustand/useConversation.js'
 
 const MessageContainer = () => {
-  const nochatselected =true;
+  const {selectedConversation,setselectedConversation}= useConversation();
+
+/*Reloads the conversation status meaning prev. selected chats won't stay selected after login */
+  useEffect(()=>{
+    return ()=>setselectedConversation(null)
+  },[setselectedConversation]);
+
   return (
     <div className='flex-1 md:min-w-[450px] flex flex-col h-full'>
-      {nochatselected? <Nochatselected /> :(  <>
+      {!selectedConversation ? <Nochatselected /> : (
+        <>
         <div className="bg-gradient-to-r from-black to-gray-900 border-b border-blue-500 px-4 py-2 backdrop-filter backdrop-blur-lg bg-opacity-30 shadow-blue-400/20">
             <span className="label-text text-gray-200">To:</span>{" "}
-            <span className="text-white font-bold">Test 2</span>
+            <span className="text-white font-bold">{selectedConversation.fullname}</span>
         </div>
         <div className="flex-1 overflow-hidden flex flex-col">
           <Messages />
         </div>
         <MessageInput />
-        </>)}
+        </>
+      )}
     </div>
   )
 }

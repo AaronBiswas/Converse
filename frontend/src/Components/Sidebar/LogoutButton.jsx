@@ -8,7 +8,7 @@ const LogoutButton = () => {
       {!loading ? (
         <BiLogOut
         onClick={Logout}
-        className="w-6 h-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors duration-300"
+        className="w-6 h-6 text-blue-400 hover:text-blue-300 cursor-pointer transition-colors duration-500"
       />
       ) : (
         <span className="loading loading-spinner"></span>

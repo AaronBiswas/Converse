@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 // Futuristic page transition component
 const PageTransition = ({ children }) => {
+  // State to track if component is ready to animate
+  const [isReady, setIsReady] = useState(false);
+
+  // Add a small delay before starting the animation
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 700); // Increased delay to ensure DOM is fully ready
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   // Variants for the page transitions
   const pageVariants = {
     initial: {
@@ -31,6 +43,17 @@ const PageTransition = ({ children }) => {
     ease: [0.25, 0.1, 0.25, 1], // Cubic bezier for a smooth, futuristic curve
     duration: 0.5,
   };
+
+  // If not ready, render children without animation
+  if (!isReady) {
+    return (
+      <div className="w-full h-full relative overflow-hidden">
+        <div className="relative z-10">
+          {children}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <motion.div
