@@ -2,15 +2,18 @@ import React, { useEffect, useRef } from "react";
 import Message from "./Message.jsx";
 import useGetMessage from "../../Hooks/useGetMessage.js";
 import MessageSkeleton from "../Skeletons/MessageSkeleton.jsx";
+import useListenMessages from "../../Hooks/useListenMessages.js";
 
 const Messages = () => {
   const { messages, loading } = useGetMessage();
-  const lastMessageRef =useRef(null);
-  useEffect(()=>{
-    setTimeout(()=>{
+  useListenMessages();
+  const lastMessageRef = useRef(null);
+  
+  useEffect(() => {
+    setTimeout(() => {
       lastMessageRef.current?.scrollIntoView({behavior:"smooth"});
-    },100)
-  },[messages])
+    }, 100);
+  }, [messages]);
 
   return (
     <div className="px-4 flex-1 overflow-auto">
@@ -24,9 +27,12 @@ const Messages = () => {
       ) : (
         // Show actual messages when they exist
         messages && messages.length > 0 && 
-        messages.map((message) => (
-          <div key={message._id} ref={lastMessageRef}>
-            <Message  message={message} />
+        messages.map((message, index) => (
+          <div 
+            key={message._id || index} 
+            ref={index === messages.length - 1 ? lastMessageRef : null}
+          >
+            <Message message={message} />
           </div>
         ))
       )}

@@ -6,8 +6,8 @@ import authRoutes from "../backend/Routes/Auth.routes.js";
 import messageRoutes from "../backend/Routes/Message.routes.js";
 import userRoutes from "../backend/Routes/User.routes.js";
 import connected from "./db/connectdb.js";
+import { app, server } from "./Socket/Socket.js";
 
-const app = express();
 config();
 const PORT = process.env.PORT || 8000;
 
@@ -31,7 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/message",messageRoutes);
 app.use("/api/users",userRoutes);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   connected();
   console.log(`Server is running at port ${PORT}`);
 });
