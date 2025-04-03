@@ -11,6 +11,7 @@ const useGetMessage = () => {
             setloading(true);
             try {
               const res = await fetch(`https://converse-7i2n.onrender.com/api/message/${selectedConversation._id}`, {
+                method: "GET",
                 credentials: "include" // Add credentials to include cookies
               });
               const data = await res.json();

@@ -11,6 +11,11 @@ const useGetConversation = () => {
 
   useEffect(() => {
     const getConversation = async () => {
+      if (!AuthUser) {
+        // Skip API call if user is not authenticated
+        return;
+      }
+      
       setloading(true);
       try {
         const res = await fetch("https://converse-7i2n.onrender.com/api/users", {
@@ -27,13 +32,13 @@ const useGetConversation = () => {
         }
         setconversation(data);
       } catch (error) {
-        toast.error(error.message);
+        toast.error(error.message || "Failed to fetch conversations");
       } finally {
         setloading(false);
       }
     };
     getConversation();
-  }, []);
+  }, [AuthUser]);
   
   return { loading, conversation, selectedConversation, setSelectedConversation: setselectedConversation };
 };

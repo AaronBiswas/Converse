@@ -12,9 +12,6 @@ const Conversations = ({ conversation, lastIdx, isSelected, setSelectedConversat
     return null;
   }
   
-
-
-
   return (
     <>
       <div className={`flex gap-2 items-center hover:bg-blue-500/20 rounded p-2 py-1 cursor-pointer transition-all duration-500 backdrop-blur-sm
@@ -23,12 +20,8 @@ const Conversations = ({ conversation, lastIdx, isSelected, setSelectedConversat
         <div className={`avatar ${isOnline? "avatar-online":"avatar-offline"}`}>
           <div className="w-12 rounded-full border border-blue-500/50 shadow-sm shadow-blue-400/30">
             <img 
-              src={conversation.profilePic || "https://via.placeholder.com/50"} 
+              src={conversation.profilePic} 
               alt="user avatar" 
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "https://via.placeholder.com/50";
-              }}
             />
           </div>
         </div>
