@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 // CORS configuration
 app.use(cors({
   origin: process.env.NODE_ENV === "production" 
-    ? [process.env.FRONTEND_URL, "https://converse-chat.netlify.app"] 
+    ? [process.env.FRONTEND_URL, "https://cool-otter-58e1d5.netlify.app"] 
     : "http://localhost:5173",
   credentials: true, // Allow cookies to be sent
   methods: ["GET", "POST", "PUT", "DELETE"],

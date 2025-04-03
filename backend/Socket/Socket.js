@@ -7,7 +7,7 @@ const server =http.createServer(app);
 const io=new Server(server,{
     cors:{
        origin: process.env.NODE_ENV === "production" 
-         ? [process.env.FRONTEND_URL, "https://converse-chat.netlify.app"]
+         ? [process.env.FRONTEND_URL, "https://cool-otter-58e1d5.netlify.app"]
          : "http://localhost:5173",
        methods:["GET","POST"],
        credentials: true
