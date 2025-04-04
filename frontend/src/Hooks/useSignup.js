@@ -9,14 +9,14 @@ const useSignup = () => {
     fullname,
     username,
     password,
-    confirmpassword,
+    confirmPassword,
     gender,
   }) => {
     const success = handleInputErrors({
       fullname,
       username,
       password,
-      confirmpassword,
+      confirmPassword,
       gender,
     });
     if (!success) return false;
@@ -30,7 +30,7 @@ const useSignup = () => {
           fullname,
           username,
           password,
-          confirmpassword,
+          confirmpassword: confirmPassword,
           gender,
         }),
       });
@@ -57,15 +57,15 @@ function handleInputErrors({
   fullname,
   username,
   password,
-  confirmpassword,
+  confirmPassword,
   gender,
 }) {
-  if (!fullname || !username || !password || !confirmpassword || !gender) {
+  if (!fullname || !username || !password || !confirmPassword || !gender) {
     toast.error("Please fill all the details");
     return false;
   }
 
-  if (password !== confirmpassword) {
+  if (password !== confirmPassword) {
     toast.error("Passwords do not match");
     return false;
   }
