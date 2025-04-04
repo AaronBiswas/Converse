@@ -29,17 +29,17 @@ const SearchInput = () => {
   }
   
   return (
-    <form onSubmit={handleSubmit} className='flex items-center'>
-      <div className="w-full bg-gray-800 rounded-lg flex items-center px-2 py-1">
-        <FaSearch className="text-gray-400 mr-2" size={14} />
-        <input
-          type="text"
-          placeholder="Search or start new chat"
-          className="w-full bg-transparent border-none text-sm text-white py-1 px-1 focus:outline-none focus:ring-0"
-          value={Search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
+    <form onSubmit={handleSubmit} className='flex items-center gap-2'>
+      <input
+        type="text"
+        placeholder="Search"
+        className="w-full input input-bordered h-10 text-sm bg-gray-800/50 text-white border-blue-500/50 focus:border-blue-500 focus:ring-blue-500"
+        value={Search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button className="btn btn-circle bg-gradient-to-r from-blue-500 to-blue-700 hover:bg-blue-600 border-blue-500 shadow-lg shadow-blue-400/20">
+        <FaSearch className="text-white size-[1.2em]" />
+      </button>
     </form>
   )
 }

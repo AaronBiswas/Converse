@@ -3,13 +3,12 @@ import Conversations from './Conversations.jsx'
 import useGetConversation from '../../Hooks/useGetConversation.js';
 import useConversation from '../../Zustand/useConversation.js';
 
-const Conversation = () => {
+const Conversation = ({ onSelectConversation }) => {
   const { loading, conversation } = useGetConversation();
   const { selectedConversation, setselectedConversation } = useConversation();
   
   useEffect(() => {
-    console.log("Conversations:", conversation);
-    // Check if conversation is an array or object
+    // Log conversations for debugging
     if (conversation && !Array.isArray(conversation)) {
       console.log("Conversation is not an array:", typeof conversation, conversation);
     }
@@ -35,6 +34,7 @@ const Conversation = () => {
           conversation={conv}
           lastIdx={idx === conversationsArray.length - 1}
           isSelected={selectedConversation?._id === conv._id}
+          onSelectConversation={onSelectConversation}
         />
       ))}
     </div>

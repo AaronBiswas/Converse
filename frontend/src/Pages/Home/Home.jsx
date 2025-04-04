@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar/Sidebar.jsx';
 import MessageContainer from '../../Components/message/MessageContainer.jsx';
 import { IoMdMenu } from "react-icons/io";
@@ -9,25 +9,40 @@ import useConversation from '../../Zustand/useConversation.js';
 const Home = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const { selectedConversation } = useConversation();
-  const { AuthUser } = useAuthContext();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   
-  // WhatsApp-style: On mobile, show conversations list first, then switch to messages when selected
-  // On desktop, show both side by side
-  const isMobile = window.innerWidth < 768;
-  const showMessages = isMobile ? selectedConversation && !showSidebar : true;
-  const showConversations = isMobile ? showSidebar : true;
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // On mobile, automatically switch to messages when a conversation is selected
+  useEffect(() => {
+    if (isMobile && selectedConversation) {
+      setShowSidebar(false);
+    }
+  }, [selectedConversation, isMobile]);
   
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
   
   return (
-    <div className="flex flex-col h-screen bg-gray-950">
-      {/* WhatsApp-style header */}
-      <div className="bg-blue-700 text-white px-4 py-3 flex items-center shadow-md z-10">
-        <div className="flex-1 font-bold text-lg">Converse</div>
-        {isMobile && selectedConversation && (
-          <button className="text-white" onClick={toggleSidebar}>
+    <div className="flex flex-col h-screen overflow-hidden">
+      {/* App header */}
+      <div className="bg-gray-900 border-b border-gray-700 text-white px-4 py-3 flex items-center shadow-md">
+        <div className="flex-1 font-semibold text-lg">Converse</div>
+        {isMobile && (
+          <button 
+            className="text-gray-200 hover:text-white" 
+            onClick={toggleSidebar}
+            aria-label={showSidebar ? "Close sidebar" : "Open sidebar"}
+          >
             {showSidebar ? <IoClose size={24} /> : <IoMdMenu size={24} />}
           </button>
         )}
@@ -37,20 +52,18 @@ const Home = () => {
       <div className="flex-1 flex overflow-hidden relative">
         {/* Conversations list (sidebar) */}
         <div 
-          className={`${showConversations ? 'flex' : 'hidden'} md:flex 
-          absolute md:relative inset-0 md:w-1/3 lg:w-96 flex-col bg-gray-900 
-          transition-all duration-300 ease-in-out z-20`}
+          className={`${showSidebar ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0
+          transition-transform duration-300 ease-in-out
+          absolute md:relative h-full z-20 md:w-1/3 lg:w-96`}
         >
-          <Sidebar />
+          <Sidebar 
+            showSidebar={showSidebar} 
+            onConversationSelect={() => isMobile && setShowSidebar(false)} 
+          />
         </div>
         
         {/* Message area */}
-        <div 
-          className={`${showMessages ? 'flex' : 'hidden'} md:flex 
-          absolute md:relative inset-0 md:w-2/3 lg:flex-1 flex-col 
-          bg-gradient-to-b from-gray-900 to-gray-950 
-          transition-all duration-300 ease-in-out`}
-        >
+        <div className="w-full md:w-2/3 lg:flex-1 h-full flex flex-col">
           <MessageContainer 
             toggleBack={() => setShowSidebar(true)} 
             isMobileView={isMobile}

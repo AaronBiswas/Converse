@@ -3,32 +3,36 @@ import Message from "./Message.jsx";
 import useGetMessage from "../../Hooks/useGetMessage.js";
 import MessageSkeleton from "../Skeletons/MessageSkeleton.jsx";
 import useListenMessages from "../../Hooks/useListenMessages.js";
+import { useAuthContext } from "../../Context/AuthContext.jsx";
 
 const Messages = () => {
   const { messages, loading } = useGetMessage();
+  const { AuthUser } = useAuthContext();
+  const messageEndRef = useRef(null);
+  const messageList = messages || [];
   useListenMessages();
-  const lastMessageRef = useRef(null);
-  const messagesContainerRef = useRef(null);
   
+  // Scroll to bottom when new messages are received
   useEffect(() => {
-    // Ensure the container scrolls to the bottom when messages change
-    const scrollToBottom = () => {
-      if (lastMessageRef.current) {
-        lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
-      } else if (messagesContainerRef.current) {
-        messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
-      }
-    };
+    // Short timeout to ensure DOM is updated
+    const timeoutId = setTimeout(() => {
+      messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
     
-    const timer = setTimeout(scrollToBottom, 100);
-    return () => clearTimeout(timer);
-  }, [messages]);
+    return () => clearTimeout(timeoutId);
+  }, [messageList.length]);
+
+  // If no messages, render nothing
+  if (!messageList.length) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center p-4">
+        <p className="text-gray-500 text-center">No messages yet. Start the conversation!</p>
+      </div>
+    );
+  }
 
   return (
-    <div 
-      ref={messagesContainerRef}
-      className="p-2 flex-1 overflow-auto"
-    >
+    <div className="flex flex-col p-4 gap-4">
       {loading ? (
         // Show skeletons while loading
         <div className="py-2">
@@ -38,25 +42,17 @@ const Messages = () => {
         </div>
       ) : (
         // Show actual messages when they exist
-        <div className="py-1">
-          {messages && messages.length > 0 ? 
-            messages.map((message, index) => (
-              <div 
-                key={message._id || index} 
-                ref={index === messages.length - 1 ? lastMessageRef : null}
-              >
-                <Message message={message} />
-              </div>
-            )) : (
-              <div className="h-full flex items-center justify-center">
-                <div className="text-center text-sm p-4 text-gray-400 bg-gray-800/50 rounded-lg">
-                  Send a message to start the conversation
-                </div>
-              </div>
-            )
-          }
-        </div>
+        messageList.map((message, index) => (
+          <Message 
+            key={message._id || index}
+            message={message}
+            isOwnMessage={message.sender === AuthUser?._id}
+          />
+        ))
       )}
+      
+      {/* Invisible element to scroll to */}
+      <div ref={messageEndRef} />
     </div>
   );
 };

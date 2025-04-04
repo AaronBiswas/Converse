@@ -5,10 +5,14 @@
 /* Apply Exo 2 font to the entire application */
 body {
     font-family: 'Exo 2', sans-serif;
-    background-color: #111827;
+    background: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url("/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
+    overscroll-behavior: none;
 }
 
 /* Responsive font sizes */
@@ -22,10 +26,17 @@ html {
     }
 }
 
+/* Fix for iOS height issues */
+@supports (-webkit-touch-callout: none) {
+    .h-screen {
+        height: -webkit-fill-available;
+    }
+}
+
 /* WhatsApp-style chat background pattern */
 .pattern-whatsapp {
     background-color: #0d1117;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.828zM11.03 0L7.372 3.657l1.415 1.414L13.857 0H11.03zm32.284 0L39.9 3.414 42.28 0h1.032zm-9.9 0L29 3.414 31.38 0h1.032zM22.626 0L26 3.414 28.38 0h1.032zm-9.9 0L8.414 3.414 10.796 0h1.032zM48.97 10l3.657 3.657-1.414 1.414L46.143 10h2.828zM11.03 10L7.372 13.657l1.415 1.414L13.857 10H11.03zm32.284 0L39.9 13.414 42.28 10h1.032zm-9.9 0L29 13.414 31.38 10h1.032zM22.626 10L26 13.414 28.38 10h1.032zm-9.9 0L8.414 13.414 10.796 10h1.032zM48.97 20l3.657 3.657-1.414 1.414L46.143 20h2.828zM11.03 20L7.372 23.657l1.415 1.414L13.857 20H11.03zm32.284 0L39.9 23.414 42.28 20h1.032zm-9.9 0L29 23.414 31.38 20h1.032zM22.626 20L26 23.414 28.38 20h1.032zm-9.9 0L8.414 23.414 10.796 20h1.032zM48.97 30l3.657 3.657-1.414 1.414L46.143 30h2.828zM11.03 30L7.372 33.657l1.415 1.414L13.857 30H11.03zm32.284 0L39.9 33.414 42.28 30h1.032zm-9.9 0L29 33.414 31.38 30h1.032zM22.626 30L26 33.414 28.38 30h1.032zm-9.9 0L8.414 33.414 10.796 30h1.032zM48.97 40l3.657 3.657-1.414 1.414L46.143 40h2.828zM11.03 40L7.372 43.657l1.415 1.414L13.857 40H11.03zm32.284 0L39.9 43.414 42.28 40h1.032zm-9.9 0L29 43.414 31.38 40h1.032zM22.626 40L26 43.414 28.38 40h1.032zm-9.9 0L8.414 43.414 10.796 40h1.032zM48.97 50l3.657 3.657-1.414 1.414L46.143 50h2.828zM11.03 50L7.372 53.657l1.415 1.414L13.857 50H11.03zm32.284 0L39.9 53.414 42.28 50h1.032zm-9.9 0L29 53.414 31.38 50h1.032zM22.626 50L26 53.414 28.38 50h1.032zm-9.9 0L8.414 53.414 10.796 50h1.032z' fill='%23333' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.828zM11.03 0L7.372 3.657l1.415 1.414L13.857 0H11.03zm32.284 0L39.9 3.414 42.28 0h1.032zm-9.9 0L29 3.414 31.38 0h1.032zM22.626 0L26 3.414 28.38 0h1.414zm-9.9 0L8.414 3.414 10.796 0h1.032zM48.97 10l3.657 3.657-1.414 1.414L46.143 10h2.828zM11.03 10L7.372 13.657l1.415 1.414L13.857 10H11.03zm32.284 0L39.9 13.414 42.28 10h1.032zm-9.9 0L29 13.414 31.38 10h1.032zM22.626 10L26 13.414 28.38 10h1.032zm-9.9 0L8.414 13.414 10.796 10h1.032zM48.97 20l3.657 3.657-1.414 1.414L46.143 20h2.828zM11.03 20L7.372 23.657l1.415 1.414L13.857 20H11.03zm32.284 0L39.9 23.414 42.28 20h1.032zm-9.9 0L29 23.414 31.38 20h1.032zM22.626 20L26 23.414 28.38 20h1.032zm-9.9 0L8.414 23.414 10.796 20h1.032zM48.97 30l3.657 3.657-1.414 1.414L46.143 30h2.828zM11.03 30L7.372 33.657l1.415 1.414L13.857 30H11.03zm32.284 0L39.9 33.414 42.28 30h1.032zm-9.9 0L29 33.414 31.38 30h1.032zM22.626 30L26 33.414 28.38 30h1.032zm-9.9 0L8.414 33.414 10.796 30h1.032zM48.97 40l3.657 3.657-1.414 1.414L46.143 40h2.828zM11.03 40L7.372 43.657l1.415 1.414L13.857 40H11.03zm32.284 0L39.9 43.414 42.28 40h1.032zm-9.9 0L29 43.414 31.38 40h1.032zM22.626 40L26 43.414 28.38 40h1.032zm-9.9 0L8.414 43.414 10.796 40h1.032zM48.97 50l3.657 3.657-1.414 1.414L46.143 50h2.828zM11.03 50L7.372 53.657l1.415 1.414L13.857 50H11.03zm32.284 0L39.9 53.414 42.28 50h1.032zm-9.9 0L29 53.414 31.38 50h1.032zM22.626 50L26 53.414 28.38 50h1.032zm-9.9 0L8.414 53.414 10.796 50h1.032z' fill='%23333' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
 /* Online indicator */
@@ -87,15 +98,15 @@ select:focus,
 /* Minimal scrollbar for mobile */
 @media (max-width: 767px) {
     ::-webkit-scrollbar{
-        width: 3px;
+        width: 2px;
     }
 
     ::-webkit-scrollbar-track{
-        background: #333;
+        background: transparent;
     }
 
     ::-webkit-scrollbar-thumb{
-        background: #121212;
+        background: rgba(18, 18, 18, 0.5);
         border-radius: 3px;
     }
 }
@@ -130,11 +141,40 @@ select:focus,
 	}
 }
 
+/* Chat styles */
+.chat {
+    display: flex;
+    margin-bottom: 1rem;
+    padding: 0 0.25rem;
+    width: 100%;
+}
+
+.chat-start {
+    justify-content: flex-start;
+}
+
+.chat-end {
+    justify-content: flex-end;
+}
+
+.chat-image {
+    margin-right: 0.5rem;
+    align-self: flex-end;
+    flex-shrink: 0;
+}
+
+.chat-end .chat-image {
+    order: 1;
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
 /* Chat bubble container */
 .chat-bubble-container {
     display: flex;
     flex-direction: column;
     max-width: 80%;
+    min-width: 0;
 }
 
 .chat-end .chat-bubble-container {
@@ -145,16 +185,10 @@ select:focus,
     align-items: flex-start;
 }
 
-.chat {
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: flex-end;
-}
-
 .chat-bubble {
     position: relative;
     border-radius: 0.75rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.75rem 1rem;
     max-width: 100%;
     word-break: break-word;
 }

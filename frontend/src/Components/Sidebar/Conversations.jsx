@@ -1,53 +1,58 @@
 import React from 'react'
 import useConversation from '../../Zustand/useConversation.js';
 import { useAuthContext } from '../../Context/AuthContext.jsx';
-import { formatDistanceToNow } from 'date-fns';
+import { useSocketContext } from '../../Context/SocketContext.jsx';
 
-const Conversations = ({ conversation, lastIdx, isSelected }) => {
+const Conversations = ({ conversation, lastIdx, isSelected, onSelectConversation }) => {
   const { setselectedConversation } = useConversation();
   const { AuthUser } = useAuthContext();
+  const { onlineUsers } = useSocketContext();
   
+  // Check if this user is online using socket context
+  const isOnline = onlineUsers?.includes(conversation._id);
+
   const handleClick = () => {
     setselectedConversation(conversation);
+    // Call the callback to notify parent components (for mobile navigation)
+    if (onSelectConversation) {
+      onSelectConversation();
+    }
   };
   
-  // Format last message time in WhatsApp style
-  const formattedTime = conversation.lastMessageTime 
-    ? formatDistanceToNow(new Date(conversation.lastMessageTime), { addSuffix: false })
-    : '';
-    
-  // Truncate last message if too long
-  const lastMessage = (conversation.lastMessage || "").length > 40 
-    ? (conversation.lastMessage || "").substring(0, 40) + "..." 
-    : conversation.lastMessage || "";
+  // Check if there's an actual message (not just the placeholder)
+  const hasMessage = conversation.lastMessage && conversation.lastMessage.trim().length > 0;
 
   return (
     <div
-      className={`flex items-center px-3 py-2 cursor-pointer border-b border-gray-800
-      ${isSelected ? 'bg-blue-800/20' : 'hover:bg-gray-800'}`}
+      className={`flex gap-2 items-center p-2 py-3 cursor-pointer 
+      ${isSelected ? 'bg-gradient-to-r from-blue-800/30 to-blue-700/20 border-r-4 border-blue-500' : 'hover:bg-black/30'} 
+      ${lastIdx ? "" : "border-b border-blue-500/20"}`}
       onClick={handleClick}
     >
-      <div className="avatar">
-        <div className={`w-12 h-12 rounded-full relative ${conversation.online ? 'online' : ''}`}>
+      <div className={`avatar ${isOnline ? 'online' : ''}`}>
+        <div className="w-12 rounded-full border border-blue-500/50 shadow-sm shadow-blue-400/20">
           <img src={conversation.profilePic} alt={conversation.fullname} />
         </div>
       </div>
-      
-      <div className="ml-3 flex-1 overflow-hidden">
+
+      <div className="flex flex-col flex-1 overflow-hidden">
         <div className="flex justify-between items-center">
-          <p className="font-medium text-white truncate">{conversation.fullname}</p>
-          <span className="text-xs text-gray-400">{formattedTime}</span>
+          <p className={`font-medium text-white truncate ${!conversation.seen && hasMessage && !isSelected ? 'text-blue-400' : ''}`}>
+            {conversation.fullname}
+          </p>
         </div>
         
         <div className="flex items-center">
           <p className="text-sm text-gray-400 truncate">
-            {lastMessage || "Click to start a conversation"}
+            {/* Only show "Click to start" if we haven't exchanged messages yet */}
+            {hasMessage 
+              ? conversation.lastMessage 
+              : (conversation.messageCount === 0 ? "Click to start a conversation" : "")}
           </p>
           
-          {!conversation.seen && (
-            <div className="ml-2 w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center">
-              <span className="text-xs text-white">1</span>
-            </div>
+          {/* Only show unread indicator if there's an actual message that's unread */}
+          {!conversation.seen && hasMessage && !isSelected && (
+            <div className="ml-2 w-2 h-2 rounded-full bg-blue-500"></div>
           )}
         </div>
       </div>
