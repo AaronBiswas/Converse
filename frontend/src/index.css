@@ -9,6 +9,30 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position:center;
+    overscroll-behavior: none;
+}
+
+/* Responsive font sizes */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 640px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+/* Mobile-first responsive design */
+.responsive-container {
+    width: 100%;
+    padding: 0.5rem;
+}
+
+@media (min-width: 640px) {
+    .responsive-container {
+        padding: 1rem;
+    }
 }
 
 /* Input field lighting effects */
@@ -77,23 +101,50 @@ button.btn:hover:after,
     opacity: 1;
 }
 
-::-webkit-scrollbar{
-    width: 8px;
+/* Customized scrollbar for desktop */
+@media (min-width: 768px) {
+    ::-webkit-scrollbar{
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track{
+        background: #555;
+    }
+
+    ::-webkit-scrollbar-thumb{
+        background: #121212;
+        border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover{
+        background: #242424;
+    }
 }
 
-::-webkit-scrollbar-track{
-    background: #555;
+/* Minimal scrollbar for mobile */
+@media (max-width: 767px) {
+    ::-webkit-scrollbar{
+        width: 4px;
+    }
+
+    ::-webkit-scrollbar-track{
+        background: #555;
+    }
+
+    ::-webkit-scrollbar-thumb{
+        background: #121212;
+        border-radius: 3px;
+    }
 }
 
-::-webkit-scrollbar-thumb{
-    background: #121212;
-    border-radius: 5px;
+/* Prevent text from being selectable on mobile */
+@media (max-width: 767px) {
+    .prevent-select {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
 }
-
-::-webkit-scrollbar-thumb:hover{
-    background: #242424;
-}
-
 
 .shake {
 	animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.2s both;
@@ -123,4 +174,15 @@ button.btn:hover:after,
 	60% {
 		transform: translate3d(4px, 0, 0);
 	}
+}
+
+/* Responsive tap targets for mobile */
+@media (max-width: 640px) {
+    button, 
+    .btn, 
+    a, 
+    .clickable {
+        min-height: 36px;
+        min-width: 36px;
+    }
 }

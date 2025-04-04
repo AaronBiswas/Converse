@@ -16,7 +16,7 @@ const Messages = () => {
   }, [messages]);
 
   return (
-    <div className="px-4 flex-1 overflow-auto">
+    <div className="px-2 sm:px-4 py-1 sm:py-2 flex-1 overflow-auto">
       {loading ? (
         // Show skeletons while loading
         <>
@@ -37,7 +37,7 @@ const Messages = () => {
         ))
       )}
       {!loading && messages.length === 0 && (
-        <p className="text-center">Send a message to start the conversation</p>
+        <p className="text-center text-sm sm:text-base p-2 sm:p-4">Send a message to start the conversation</p>
       )}
     </div>
   );

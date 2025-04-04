@@ -15,19 +15,19 @@ const Message = ({ message }) => {
 
   return (
     <>
-     <div className={`chat ${chatClassname}`}>
+     <div className={`chat ${chatClassname} mb-1 sm:mb-2`}>
         <div className="chat-image avatar">
-            <div className="w-10 rounded-full border border-blue-500/50">
+            <div className="w-8 sm:w-10 rounded-full border border-blue-500/50">
             <img
         alt="Tailwind CSS chat bubble component"
         src={profilePic} />
             </div>
         </div>
         <div>
-        <div className={`chat-bubble bg-gradient-to-r to-blue-700 text-white ${bubblebgColor} ${shakeClass} pb-2`}>
+        <div className={`chat-bubble bg-gradient-to-r to-blue-700 text-white text-xs sm:text-sm md:text-base max-w-[16rem] sm:max-w-xs md:max-w-md ${bubblebgColor} ${shakeClass} pb-2`}>
           {message.message}
         </div>
-        <div className="chat-footer opacity-50 text-gray-200">{formattedTime}</div>
+        <div className="chat-footer opacity-50 text-gray-200 text-[10px] sm:text-xs">{formattedTime}</div>
         </div>
     </div>
     </>
