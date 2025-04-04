@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import Message from "./Message.jsx";
-import useGetMessage from "../../Hooks/useGetMessage.js";
+import useGetMessages from "../../Hooks/useGetMessages.js";
 import MessageSkeleton from "../Skeletons/MessageSkeleton.jsx";
 import useListenMessages from "../../Hooks/useListenMessages.js";
 import { useAuthContext } from "../../Context/AuthContext.jsx";
 
 const Messages = () => {
-  const { messages, loading } = useGetMessage();
+  const { messages, loading } = useGetMessages();
   const { AuthUser } = useAuthContext();
   const messageEndRef = useRef(null);
   const messageList = messages || [];

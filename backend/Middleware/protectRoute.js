@@ -3,37 +3,35 @@ import User from "../models/User.model.js";
 
 const protectRoute = async (req, res, next) => {
     try {
+        console.log("Checking authentication, cookies:", req.cookies);
         const token = req.cookies.jwt;
         
         if (!token) {
-            console.log("No JWT token found in cookies");
-            return res.status(401).json({error: "Not authorized, no token provided"});
+            console.log("No token found in cookies");
+            return res.status(401).json({error: "No token provided, please log in"});
         }
 
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            
-            if (!decoded || !decoded.userId) {
-                console.log("Token verification failed or missing userId");
-                return res.status(401).json({error: "Token is invalid or expired"});
-            }
+            console.log("Token verified, decoded userId:", decoded.userId);
             
             const user = await User.findById(decoded.userId).select("-password");
             
             if (!user) {
-                console.log(`User with ID ${decoded.userId} not found`);
-                return res.status(404).json({error: "User not found"});
+                console.log("No user found with decoded userId:", decoded.userId);
+                return res.status(401).json({error: "User not found, please login again"});
             }
             
+            console.log("Authentication successful for user:", user._id);
             req.user = user;
             next();
             
-        } catch (verifyError) {
-            console.log("JWT verification error:", verifyError.message);
-            return res.status(401).json({error: "Token is invalid or expired"});
+        } catch (error) {
+            console.error("Token verification failed:", error.message);
+            return res.status(401).json({error: "Your session has expired. Please login again."});
         }
     } catch (error) {
-        console.error("Error in protectRoute middleware:", error);
+        console.error("Authentication error:", error);
         return res.status(500).json({error: "Internal server error"});
     }
 };

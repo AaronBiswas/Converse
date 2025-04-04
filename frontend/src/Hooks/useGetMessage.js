@@ -10,10 +10,11 @@ const useGetMessage = () => {
         const getMessage = async () => {
             setloading(true);
             try {
-              const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+              const API_URL = import.meta.env.VITE_API_URL || "https://converse-7i2n.onrender.com";
               const res = await fetch(`${API_URL}/api/message/${selectedConversation._id}`, {
                 method: "GET",
-                credentials: "include" // Add credentials to include cookies
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
               });
               const data = await res.json();
               if(data.error) throw new Error(data.error);

@@ -4,19 +4,19 @@ import useGetConversation from '../../Hooks/useGetConversation.js';
 import useConversation from '../../Zustand/useConversation.js';
 
 const Conversation = ({ onSelectConversation }) => {
-  const { loading, conversation } = useGetConversation();
+  const { loading, conversations } = useGetConversation();
   const { selectedConversation, setselectedConversation } = useConversation();
   
   useEffect(() => {
     // Log conversations for debugging
-    if (conversation && !Array.isArray(conversation)) {
-      console.log("Conversation is not an array:", typeof conversation, conversation);
+    if (conversations && !Array.isArray(conversations)) {
+      console.log("Conversations is not an array:", typeof conversations, conversations);
     }
-  }, [conversation]);
+  }, [conversations]);
   
   // Handle different data formats
-  const conversationsArray = Array.isArray(conversation) ? conversation : 
-    (conversation && typeof conversation === 'object' ? [conversation] : []);
+  const conversationsArray = Array.isArray(conversations) ? conversations : 
+    (conversations && typeof conversations === 'object' ? [conversations] : []);
   
   return (
     <div className='py-2 flex flex-col overflow-auto'>

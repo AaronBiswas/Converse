@@ -3,12 +3,14 @@ import { toast } from "react-hot-toast";
 import { useAuthContext } from "../Context/AuthContext";
 
 const useLogin = () => {
-  const [loading, setloading] = useState();
-  const {setAuthUser}=useAuthContext();
+  const [loading, setLoading] = useState(false);
+  const { setAuthUser } = useAuthContext();
+
   const login = async (username, password) => {
-    setloading(true);
+    setLoading(true);
     try {
-      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const API_URL = import.meta.env.VITE_API_URL || "https://converse-7i2n.onrender.com";
+      
       const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -24,17 +26,17 @@ const useLogin = () => {
         throw new Error(data.error);
       }
 
-      localStorage.setItem("chat-user",JSON.stringify(data));
+      localStorage.setItem("chat-user", JSON.stringify(data));
       setAuthUser(data);
 
     } catch (error) {
       toast.error(error.message);
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
 
-  return {loading,login}
+  return { loading, login };
 };
 
 export default useLogin;

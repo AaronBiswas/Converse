@@ -4,59 +4,44 @@ import { useAuthContext } from "../Context/AuthContext";
 import useConversation from "../Zustand/useConversation";
 
 const useGetConversation = () => {
-  const [loading, setloading] = useState(false);
-  const [conversation, setconversation] = useState([]);
-  const [error, setError] = useState(null);
-  const { selectedConversation, setselectedConversation } = useConversation();
+  const [loading, setLoading] = useState(false);
+  const [conversations, setConversations] = useState([]);
   const { AuthUser, setAuthUser } = useAuthContext();
+  const { selectedConversation, setselectedConversation } = useConversation();
 
   useEffect(() => {
-    const getConversation = async () => {
-      if (!AuthUser) {
-        // Skip API call if user is not authenticated
-        return;
-      }
-      
-      setloading(true);
-      setError(null);
-      
+    const getConversations = async () => {
+      setLoading(true);
       try {
-        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+        const API_URL = import.meta.env.VITE_API_URL || "https://converse-7i2n.onrender.com";
+        
         const res = await fetch(`${API_URL}/api/users`, {
           method: "GET",
+          credentials: "include",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          credentials: "include" // This will include cookies in the request
         });
-        
-        if (!res.ok) {
-          const data = await res.json();
-          if (res.status === 401) {
-            // Handle authentication issues
-            localStorage.removeItem("chat-user");
-            setAuthUser(null);
-            throw new Error("Your session has expired. Please login again.");
-          }
-          throw new Error(data.error || "Failed to fetch conversations");
-        }
-        
+
         const data = await res.json();
-        setconversation(data);
-        console.log("Fetched conversations:", data.length);
+        if (data.error) {
+          throw new Error(data.error);
+        }
+
+        setConversations(data);
       } catch (error) {
-        setError(error.message);
-        toast.error(error.message || "Failed to fetch conversations");
-        console.error("Error fetching conversations:", error);
+        toast.error(error.message);
       } finally {
-        setloading(false);
+        setLoading(false);
       }
     };
-    
-    getConversation();
-  }, [AuthUser, setAuthUser]);
-  
-  return { loading, conversation, error, selectedConversation, setSelectedConversation: setselectedConversation };
+
+    if (AuthUser) {
+      getConversations();
+    }
+  }, [AuthUser]);
+
+  return { loading, conversations, selectedConversation, setSelectedConversation: setselectedConversation };
 };
 
 export default useGetConversation;
