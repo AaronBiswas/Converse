@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import toast from 'react-hot-toast';
-import useConversation from '../Zustand/useConversation.js';
+import { useEffect, useState } from "react";
+import useConversation from "../Zustand/useConversation";
+import { toast } from "react-hot-toast";
 
 const useGetMessage = () => {
     const [loading, setloading] = useState(false);
@@ -10,14 +10,13 @@ const useGetMessage = () => {
         const getMessage = async () => {
             setloading(true);
             try {
-              const res = await fetch(`https://converse-7i2n.onrender.com/api/message/${selectedConversation._id}`, {
+              const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+              const res = await fetch(`${API_URL}/api/message/${selectedConversation._id}`, {
                 method: "GET",
                 credentials: "include" // Add credentials to include cookies
               });
               const data = await res.json();
-              if (data.error) {
-                throw new Error(data.error);
-              }
+              if(data.error) throw new Error(data.error);
               setMessages(data);
             } catch (error) {
               toast.error(error.message);
@@ -28,9 +27,7 @@ const useGetMessage = () => {
           if(selectedConversation?._id) getMessage();
     },[selectedConversation?._id,setMessages])
 
-  
-  
     return { messages, loading };
-}
+};
 
-export default useGetMessage
+export default useGetMessage;

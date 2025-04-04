@@ -13,7 +13,8 @@ const useSendMessage = () => {
     
     setloading(true);
     try {
-      const res = await fetch(`https://converse-7i2n.onrender.com/api/message/send/${selectedConversation._id}`, {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/api/message/send/${selectedConversation._id}`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ message: messageText }),

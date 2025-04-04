@@ -6,10 +6,11 @@ const useLogout = () => {
   const [loading,setloading]=useState(false);
   const {setAuthUser}= useAuthContext();
 
-  const Logout=async () => {
+  const logout = async () => {
     setloading(true);
     try {
-        const res= await fetch("https://converse-7i2n.onrender.com/api/auth/logout", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res= await fetch(`${API_URL}/api/auth/logout`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         credentials: "include"});
@@ -31,7 +32,7 @@ const useLogout = () => {
     }
   }
 
-  return {loading,Logout}
+  return {loading,logout}
 }
 
 export default useLogout

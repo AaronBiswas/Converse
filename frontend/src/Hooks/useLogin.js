@@ -8,7 +8,8 @@ const useLogin = () => {
   const login = async (username, password) => {
     setloading(true);
     try {
-      const res = await fetch("https://converse-7i2n.onrender.com/api/auth/login", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

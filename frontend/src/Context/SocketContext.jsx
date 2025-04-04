@@ -16,23 +16,20 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (AuthUser) {
-      const socket = io("https://converse-7i2n.onrender.com",{
+      const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:5000";
+      const socket = io(SOCKET_URL, {
         query:{
-          userId:AuthUser._id
+          userId: AuthUser._id
         }
-      }
-      
-    );
+      });
 
       setsocket(socket);
 
       socket.on("getOnlineUsers",(users)=>{
         setonlineUsers(users);
-      })
+      });
 
-
-
-      return ()=>socket.close();
+      return () => socket.close();
     } else {
         if(socket){
             socket.close();

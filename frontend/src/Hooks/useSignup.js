@@ -23,7 +23,8 @@ const useSignup = () => {
 
     setloading(true)
     try {
-      const res = await fetch("https://converse-7i2n.onrender.com/api/auth/signup", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -33,6 +34,7 @@ const useSignup = () => {
           confirmpassword: confirmPassword,
           gender,
         }),
+        credentials: "include"
       });
      const data = await res.json();
      if(data.error){
