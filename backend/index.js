@@ -11,10 +11,15 @@ import path from "path";
 import { fileURLToPath } from "url";
 import job from "./utils/cronjob.js";
 
-dotenv.config();
-
+// Configure dotenv with explicit path
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, '.env') });
+
+// For debugging
+console.log("Environment variables loaded:");
+console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("PORT:", process.env.PORT);
 
 const PORT = process.env.PORT || 5000;
 
