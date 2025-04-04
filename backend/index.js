@@ -18,7 +18,7 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 // For debugging
 console.log("Environment variables loaded:");
-console.log("MONGO_URI:", process.env.MONGO_URI);
+console.log("MONGODB_URI:", process.env.MONGODB_URI);
 console.log("PORT:", process.env.PORT);
 
 const PORT = process.env.PORT || 5000;
@@ -73,7 +73,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
     server.listen(PORT, () => {
