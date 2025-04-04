@@ -60,8 +60,27 @@ app.use(cookieParser()); // parse cookies
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/messages", messageRoutes);
+app.use("/api/message", messageRoutes);
 app.use("/api/users", userRoutes);
+
+// Add a test route at the API root
+app.get("/api/test", (req, res) => {
+  console.log("API root test route hit");
+  return res.status(200).json({ 
+    message: "API is working", 
+    routes: [
+      "/api/auth/*",
+      "/api/message/*",
+      "/api/users/*"
+    ]
+  });
+});
+
+// Debug route registration
+console.log("Registered routes:");
+console.log("- Auth routes: /api/auth/*");
+console.log("- Message routes: /api/message/*");
+console.log("- User routes: /api/users/*");
 
 // Static files
 const dirname = path.resolve();

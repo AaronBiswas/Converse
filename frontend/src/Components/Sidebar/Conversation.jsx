@@ -12,7 +12,12 @@ const Conversation = ({ onSelectConversation }) => {
     if (conversations && !Array.isArray(conversations)) {
       console.log("Conversations is not an array:", typeof conversations, conversations);
     }
-  }, [conversations]);
+    
+    // Debug selected conversation
+    if (selectedConversation) {
+      console.log("Selected conversation:", selectedConversation);
+    }
+  }, [conversations, selectedConversation]);
   
   // Handle different data formats
   const conversationsArray = Array.isArray(conversations) ? conversations : 
