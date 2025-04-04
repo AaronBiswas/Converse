@@ -22,7 +22,8 @@ console.log("Environment variables loaded:");
 // Don't log sensitive information
 console.log("PORT:", process.env.PORT);
 
-const PORT = process.env.PORT || 5000;
+// Ensure port is set to 8000 for Render
+const PORT = process.env.PORT || 8000;
 
 job.start();
 
@@ -33,7 +34,8 @@ const allowedOrigins = [
   "http://localhost:5173",
   undefined, // For mobile apps or requests without Origin header
   "https://converse-chat.onrender.com",
-  "https://converse-client-z44p.onrender.com"
+  "https://converse-client-z44p.onrender.com",
+  "https://converse-7i2n.onrender.com"
 ];
 
 app.use(
