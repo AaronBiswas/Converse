@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import Conversations from './Conversations.jsx'
 import useGetConversation from '../../Hooks/useGetConversation.js';
+import useConversation from '../../Zustand/useConversation.js';
 
 const Conversation = () => {
-  const { loading, conversation, selectedConversation, setSelectedConversation } = useGetConversation();
+  const { loading, conversation } = useGetConversation();
+  const { selectedConversation, setselectedConversation } = useConversation();
   
   useEffect(() => {
     console.log("Conversations:", conversation);
@@ -33,7 +35,6 @@ const Conversation = () => {
           conversation={conv}
           lastIdx={idx === conversationsArray.length - 1}
           isSelected={selectedConversation?._id === conv._id}
-          setSelectedConversation={setSelectedConversation}
         />
       ))}
     </div>
