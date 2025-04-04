@@ -31,7 +31,8 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:5173",
   undefined, // For mobile apps or requests without Origin header
-  "https://converse-chat.onrender.com"
+  "https://converse-chat.onrender.com",
+  "https://converse-client-z44p.onrender.com"
 ];
 
 app.use(
