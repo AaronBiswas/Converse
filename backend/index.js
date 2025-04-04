@@ -10,6 +10,7 @@ import { app, server } from "./Socket/Socket.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import job from "./utils/cronjob.js";
+import fs from "fs";
 
 // Configure dotenv with explicit path
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +19,7 @@ dotenv.config({ path: path.join(__dirname, '.env') });
 
 // For debugging
 console.log("Environment variables loaded:");
-console.log("MONGODB_URI:", process.env.MONGODB_URI);
+// Don't log sensitive information
 console.log("PORT:", process.env.PORT);
 
 const PORT = process.env.PORT || 5000;
@@ -64,11 +65,14 @@ app.use("/api/users", userRoutes);
 
 // Static files
 const dirname = path.resolve();
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(dirname, "frontend/dist")));
+const frontendDistPath = path.join(dirname, "frontend", "dist");
+
+if (process.env.NODE_ENV === "production" && fs.existsSync(frontendDistPath)) {
+  console.log("Serving static files from:", frontendDistPath);
+  app.use(express.static(frontendDistPath));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(dirname, "frontend", "dist", "index.html"));
+    res.sendFile(path.resolve(frontendDistPath, "index.html"));
   });
 }
 
